@@ -1,0 +1,257 @@
+/* =========================================================
+   HOBBIES — VISUAL BIOGRAPHY
+   Real tabletop image + independently layered objects.
+   The background stays static; only the meaningful objects
+   respond to hover so the section remains light to render.
+========================================================= */
+
+.hobbies-section {
+    padding-top: clamp(2.5rem, 5vw, 5rem);
+}
+
+.hobbies-head {
+    margin-bottom: clamp(1.4rem, 2.5vw, 2.2rem);
+}
+
+/* ---------- STAGE ---------- */
+
+.bio-visual {
+    --bio-radius: clamp(18px, 2vw, 28px);
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+    aspect-ratio: 1672 / 941;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid var(--glass-line);
+    border-radius: var(--bio-radius);
+    background: #c99568;
+    box-shadow:
+        0 28px 70px rgba(0, 0, 0, .20),
+        inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+/*
+    The photograph/reference base never moves.
+    Keeping it as one raster layer is considerably cheaper
+    than recreating the desk using dozens of CSS elements.
+*/
+.bio-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ---------- INTERACTIVE LAYERS ---------- */
+
+.bio-items {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.bio-item {
+    position: absolute;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    appearance: none;
+    line-height: 0;
+    cursor: pointer;
+    pointer-events: auto;
+
+    /*
+        Prevent a transformed object from causing accidental
+        browser layout work. Everything is absolutely positioned.
+    */
+    transform-origin: center center;
+    transition:
+        transform .38s cubic-bezier(.22,.8,.2,1),
+        filter .38s cubic-bezier(.22,.8,.2,1);
+    will-change: transform;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bio-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    user-select: none;
+    pointer-events: none;
+    filter: drop-shadow(0 14px 17px rgba(0,0,0,.12));
+}
+
+/*
+    Hover is deliberately restrained.
+    The object should feel like a physical item being picked up,
+    not like a UI card.
+*/
+.bio-item:hover {
+    z-index: 20;
+}
+
+.bio-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 7px;
+    border-radius: 8px;
+}
+
+/* ---------- EXACT COMPOSITION ---------- */
+
+/* Piano — upper left */
+.bio-piano {
+    left: 0;
+    top: 0;
+    width: 50.72%;
+    transform: rotate(0deg);
+}
+
+.bio-piano:hover {
+    transform: translateY(-7px) scale(1.035);
+}
+
+/* Headphones — upper middle */
+.bio-headphones {
+    left: 40.07%;
+    top: 19.55%;
+    width: 16.45%;
+    transform: rotate(0deg);
+}
+
+.bio-headphones:hover {
+    transform: translateY(-9px) scale(1.055) rotate(1deg);
+}
+
+/* Books — upper right */
+.bio-books {
+    left: 63.40%;
+    top: 5.20%;
+    width: 36.42%;
+    transform: rotate(0deg);
+}
+
+.bio-books:hover {
+    transform: translateY(-10px) scale(1.04) rotate(-1deg);
+}
+
+/* Sketchbook — lower left/middle */
+.bio-sketchbook {
+    left: 18.84%;
+    top: 39.30%;
+    width: 26.55%;
+    transform: rotate(0deg);
+}
+
+.bio-sketchbook:hover {
+    transform: translateY(-10px) scale(1.045) rotate(-1deg);
+}
+
+/* Drone — bottom left */
+.bio-drone {
+    left: 0;
+    top: 72.47%;
+    width: 24.58%;
+    transform: rotate(0deg);
+}
+
+.bio-drone:hover {
+    transform: translateY(-10px) scale(1.06) rotate(-1deg);
+}
+
+/* Guitar — lower right */
+.bio-guitar {
+    left: 72.91%;
+    top: 58.24%;
+    width: 27.09%;
+    transform: rotate(0deg);
+}
+
+.bio-guitar:hover {
+    transform: translateY(-10px) scale(1.045) rotate(-1deg);
+}
+
+/* ---------- FUTURE LAPTOP LAYER ---------- */
+
+.bio-laptop {
+    left: 27%;
+    top: 1%;
+    width: 34%;
+}
+
+.bio-laptop:hover {
+    transform: translateY(-9px) scale(1.04);
+}
+
+/*
+    A very light film grain. It sits over the photo but below
+    interactive objects. No blur/filter is used here.
+*/
+.bio-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    opacity: .055;
+    background-image:
+        radial-gradient(rgba(255,255,255,.9) .45px, transparent .65px);
+    background-size: 5px 5px;
+    mix-blend-mode: soft-light;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 900px) {
+
+    .bio-visual {
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 620px) {
+
+    /*
+        Keep the same photograph and object relationships on
+        smaller screens. The stage is an aspect-ratio canvas,
+        so every layer scales together instead of turning into
+        a generic stacked card layout.
+    */
+    .hobbies-section {
+        padding-top: 3rem;
+    }
+
+    .bio-visual {
+        width: calc(100% + 2 * var(--gutter));
+        margin-left: calc(-1 * var(--gutter));
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .bio-caption {
+        display: none;
+    }
+
+    .bio-item:hover {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .bio-item,
+    .bio-item:hover {
+        transition: none;
+        transform: none;
+    }
+}

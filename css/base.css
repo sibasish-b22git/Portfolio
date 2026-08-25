@@ -1,0 +1,697 @@
+/* =========================================================
+   BASE — DESIGN SYSTEM
+   All colors, spacing, type and motion tokens live here.
+   Never hardcode colors in section CSS: use these tokens.
+========================================================= */
+
+:root {
+
+    /* ---------- BRAND SCALE (theme independent) ---------- */
+
+    --orange:            #FF7A1A;
+    --orange-soft:       #FFB067;
+    --orange-deep:       #C24E00;
+    --signal:            #4FD1A5;
+
+    /* ---------- TYPOGRAPHY ---------- */
+
+    --sans:  "Manrope", system-ui, sans-serif;
+    --mono:  "DM Mono", ui-monospace, monospace;
+
+    --step--1: clamp(0.78rem, 0.75rem + 0.15vw, 0.85rem);
+    --step-0:  clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+    --step-1:  clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
+    --step-2:  clamp(1.5rem, 1.3rem + 1vw, 2rem);
+    --step-3:  clamp(2rem, 1.6rem + 2vw, 3.1rem);
+    --step-4:  clamp(2.8rem, 2rem + 4.5vw, 6.2rem);
+
+    /* ---------- RHYTHM ----------
+       Section padding was reduced by 1.5cm (~57px) total
+       vertical height compared to the previous build.
+    -------------------------------------------------- */
+
+    --section-pad-y: clamp(3.1rem, 5.2vw, 5.4rem);
+    --gutter:        clamp(1.25rem, 4vw, 5rem);
+    --maxw:          1240px;
+    --radius:        18px;
+    --radius-lg:     26px;
+
+    /* ---------- MOTION ---------- */
+
+    --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+    --dur:       0.45s;
+}
+
+
+/* =========================================================
+   DARK THEME (default)
+========================================================= */
+
+:root,
+body {
+    --bg:            #0B0C0E;
+    --bg-elev:       #121417;
+    --bg-elev-2:     #181B1F;
+    --bg-inverse:    #F4F1EC;
+
+    --text:          #ECEFEE;
+    --text-muted:    #9AA1A3;
+    --text-faint:    #6B7174;
+
+    --line:          rgba(236, 239, 238, 0.12);
+    --line-strong:   rgba(236, 239, 238, 0.22);
+
+    --accent:        var(--orange);
+    --accent-ink:    #17110A;
+    --accent-tint:   rgba(255, 122, 26, 0.14);
+
+    --band:          #101214;              /* alternating band */
+    --band-text:     var(--text);
+
+    --shadow-sm:     0 6px 20px rgba(0, 0, 0, 0.35);
+    --shadow-lg:     0 26px 70px rgba(0, 0, 0, 0.5);
+
+    --nav-bg:        rgba(11, 12, 14, 0.62);
+    --nav-bg-solid:  rgba(11, 12, 14, 0.92);
+
+    --grain-opacity: 0.05;
+
+    /* ---------- GLASSMORPHISM ---------- */
+    --glass-bg:        rgba(22, 25, 29, 0.36);
+    --glass-bg-strong: rgba(16, 18, 21, 0.62);
+    --glass-plate:     rgba(18, 20, 24, 0.34);
+    --glass-line:      rgba(236, 239, 238, 0.16);
+    --glass-sheen:     rgba(255, 255, 255, 0.10);
+}
+
+
+/* =========================================================
+   LIGHT THEME
+   High contrast, warm paper + ink + orange.
+========================================================= */
+
+body.light-mode {
+    --bg:            #F7F4EE;
+    --bg-elev:       #FFFFFF;
+    --bg-elev-2:     #EFE9DF;
+    --bg-inverse:    #14161A;
+
+    --text:          #14161A;
+    --text-muted:    #545B60;
+    --text-faint:    #7C8388;
+
+    --line:          rgba(20, 22, 26, 0.16);
+    --line-strong:   rgba(20, 22, 26, 0.32);
+
+    --accent:        #E2610A;
+    --accent-ink:    #FFFFFF;
+    --accent-tint:   rgba(226, 97, 10, 0.12);
+
+    --band:          #14161A;              /* dark band inside light theme */
+    --band-text:     #F7F4EE;
+
+    --shadow-sm:     0 6px 18px rgba(20, 22, 26, 0.08);
+    --shadow-lg:     0 26px 60px rgba(20, 22, 26, 0.14);
+
+    --nav-bg:        rgba(247, 244, 238, 0.68);
+    --nav-bg-solid:  rgba(247, 244, 238, 0.94);
+
+    --grain-opacity: 0.035;
+
+    /* ---------- GLASSMORPHISM ---------- */
+    --glass-bg:        rgba(255, 255, 255, 0.32);
+    --glass-bg-strong: rgba(255, 255, 255, 0.58);
+    --glass-plate:     rgba(255, 255, 255, 0.38);
+    --glass-line:      rgba(20, 22, 26, 0.14);
+    --glass-sheen:     rgba(255, 255, 255, 0.65);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img, svg, video { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+
+/* =========================================================
+   THEME SWITCHING PERFORMANCE
+
+   Only the two properties that must animate are animated,
+   and only while <html> carries .theme-anim (250ms).
+   Nothing else transitions colour, so toggling the theme
+   never triggers a page-wide transition storm.
+========================================================= */
+
+html.theme-anim body,
+html.theme-anim .navbar,
+html.theme-anim .section-band {
+    transition: background-color 0.25s linear, color 0.25s linear;
+}
+
+/* While switching, suppress every other transition/animation
+   so the browser only repaints — this removes the frame drop. */
+html.theme-anim *:not(body):not(.navbar):not(.section-band):not(.theme-knob):not(.theme-switch):not(.theme-icon) {
+    transition: none !important;
+    animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+
+/* =========================================================
+   LAYOUT PRIMITIVES
+========================================================= */
+
+.section {
+    position: relative;
+    padding: var(--section-pad-y) var(--gutter);
+}
+
+.shell {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+}
+
+/* Inverted band — used to break the monotone page.
+   Applied to one or two sections only. */
+.section-band {
+    background: var(--band);
+    color: var(--band-text);
+}
+
+/* Soft gradient lead-in so a band never starts abruptly */
+.section-fade-top::before,
+.section-fade-bottom::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 120px;
+    pointer-events: none;
+}
+.section-fade-top::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--bg), transparent);
+}
+.section-fade-bottom::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg), transparent);
+}
+
+/* Warm gradient wash used on the About section */
+.section-warm {
+    background:
+        radial-gradient(120% 80% at 15% 0%, var(--accent-tint), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg-elev));
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   Deliberately different from the hero name lockup:
+   small mono eyebrow + medium weight sentence-case title.
+========================================================= */
+
+.section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding-bottom: 1.4rem;
+    margin-bottom: clamp(1.8rem, 3vw, 2.8rem);
+    border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.eyebrow::before {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: var(--accent);
+}
+
+.section-title {
+    font-size: var(--step-3);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-top: 0.7rem;
+    max-width: 20ch;
+}
+
+.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+}
+
+.section-note {
+    max-width: 38ch;
+    color: var(--text-muted);
+    font-size: var(--step-0);
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    font-weight: 600;
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+    transition: transform var(--dur) var(--ease),
+                background-color var(--dur) var(--ease),
+                color var(--dur) var(--ease),
+                border-color var(--dur) var(--ease);
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+.btn-primary:hover { background: var(--orange-deep); border-color: var(--orange-deep); color: #fff; }
+
+.btn-ghost:hover {
+    background: var(--accent-tint);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+
+/* =========================================================
+   MEDIA SLOTS
+   Every place that expects a real photo / render / video
+   uses this component. The label tells you exactly which
+   file to drop in and the recommended aspect + size.
+========================================================= */
+
+.media-slot {
+    position: relative;
+    display: grid;
+    place-content: center;
+    gap: 0.35rem;
+    text-align: center;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    background:
+        repeating-linear-gradient(
+            45deg,
+            transparent 0 12px,
+            var(--accent-tint) 12px 13px
+        );
+    color: var(--text-muted);
+    overflow: hidden;
+    min-height: 160px;
+    padding: 1rem;
+}
+
+.media-slot .slot-tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.media-slot .slot-path {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--text);
+    word-break: break-all;
+}
+
+.media-slot .slot-hint {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+}
+
+/* Drop a real image in like this and the label disappears:
+   <div class="media-slot"><img src="assets/images/x.jpg" alt=""></div> */
+.media-slot img,
+.media-slot video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-slot:has(img),
+.media-slot:has(video) { border-style: solid; background: none; }
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0s);
+}
+
+[data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+
+/* =========================================================
+   FOOTER — techy terminal strip
+========================================================= */
+
+.site-footer {
+    position: relative;
+    padding: clamp(1.6rem, 3vw, 2.4rem) var(--gutter) clamp(1.2rem, 2vw, 1.8rem);
+    border-top: 1px solid var(--glass-line);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(130%);
+    overflow: hidden;
+    font-size: var(--step--1);
+    color: var(--text-muted);
+}
+
+/* faint circuit grid */
+.site-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--glass-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--glass-line) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(80% 120% at 50% 0%, #000, transparent 75%);
+    -webkit-mask-image: radial-gradient(80% 120% at 50% 0%, #000, transparent 75%);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.footer-inner {
+    position: relative;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.footer-id {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+.footer-id .footer-mark {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 800;
+    font-size: 0.7rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--glass-line);
+    background: var(--glass-plate);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.footer-links a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+.footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.footer-status .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--signal) 20%, transparent);
+    animation: footer-pulse 2.4s var(--ease) infinite;
+}
+
+@keyframes footer-pulse {
+    50% { box-shadow: 0 0 0 9px color-mix(in oklab, var(--signal) 0%, transparent); }
+}
+
+.footer-baseline {
+    position: relative;
+    max-width: var(--maxw);
+    margin: 1.2rem auto 0;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--glass-line);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.site-footer a { color: inherit; }
+.site-footer a:hover { color: var(--accent); }
+
+@media (max-width: 820px) {
+    .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .footer-baseline { justify-content: center; text-align: center; }
+}
+
+
+/* =========================================================
+   PRELOADER — minimal horizontal line
+========================================================= */
+
+.preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .55s var(--ease), visibility .55s var(--ease);
+}
+
+.preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader-track {
+    width: min(260px, 52vw);
+    height: 5px;
+    border: 1px solid var(--accent);
+    padding: 1px;
+    overflow: hidden;
+}
+
+.preloader-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: preload-fill 1.2s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+@keyframes preload-fill {
+    0% { transform: scaleX(0); }
+    70% { transform: scaleX(.78); }
+    100% { transform: scaleX(1); }
+}
+
+/* =========================================================
+   FOOTER — personal signature / minimal closing line
+========================================================= */
+
+.footer-signature-row {
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.footer-signature {
+    justify-self: start;
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 150px;
+    color: var(--text);
+}
+
+.signature-sb {
+    display: block;
+    font-family: 'Brittany', cursive;
+    font-size: 2.7rem;
+    line-height: .8;
+    color: var(--text);
+    clip-path: inset(0 100% 0 0);
+    animation: signature-write 1.9s 0.2s var(--ease-out) forwards;
+}
+
+.signature-label {
+    margin-top: .35rem;
+    font-family: var(--mono);
+    font-size: .56rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.footer-made {
+    justify-self: center;
+    font-family: 'Brittany', cursive;
+    font-size: 1.25rem;
+    letter-spacing: .01em;
+    color: var(--text-muted);
+}
+
+.footer-heart {
+    display: inline-grid;
+    place-items: center;
+    margin-inline: .2rem;
+    color: var(--accent) !important;
+    font-size: 1rem;
+    transition: transform .3s var(--ease);
+}
+.footer-heart:hover { transform: translateY(-2px) scale(1.12); }
+
+.footer-copy {
+    justify-self: end;
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    color: var(--text-faint);
+}
+
+@keyframes signature-write {
+    to { clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .signature-sb { clip-path: none; animation: none; }
+}
+
+@media (max-width: 820px) {
+    .footer-signature-row { grid-template-columns: 1fr; justify-items: center; }
+    .footer-signature { justify-self: center; align-items: center; }
+    .footer-copy { justify-self: center; }
+}
+
+
+/* =========================================================
+   BAND TOKEN SCOPE
+   Inside an inverted band the local tokens flip too, so every
+   card/border/label inside stays readable in both themes.
+========================================================= */
+
+.section-band {
+    --bg:          #0F1114;
+    --bg-elev:     #171A1E;
+    --bg-elev-2:   #1F2328;
+    --text:        #F2F4F3;
+    --text-muted:  #A3AAAD;
+    --text-faint:  #7B8285;
+    --line:        rgba(242, 244, 243, 0.14);
+    --line-strong: rgba(242, 244, 243, 0.26);
+    --accent:      #FF8A33;
+    --accent-ink:  #17110A;
+    --accent-tint: rgba(255, 138, 51, 0.14);
+    color: var(--text);
+}

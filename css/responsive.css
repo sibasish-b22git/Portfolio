@@ -1,0 +1,82 @@
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1080px) {
+
+    .experience-item { grid-template-columns: 180px minmax(0, 1fr); }
+    .experience-item .media-slot { grid-column: 1 / -1; aspect-ratio: 16 / 7; }
+}
+
+@media (max-width: 900px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: calc(var(--section-pad-y) + 4.5rem);
+    }
+
+    .hero-visual { order: -1; }
+    .hero-visual .media-slot { aspect-ratio: 16 / 11; min-height: 240px; }
+
+    .about-layout { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+
+    .nav-links {
+        position: absolute;
+        top: calc(100% + 0.6rem);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.9rem;
+        padding: 1.1rem 1.3rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--nav-bg-solid);
+        backdrop-filter: blur(10px);
+        display: none;
+    }
+
+    .nav-links.is-open { display: flex; }
+
+    .nav-toggle { display: grid; }
+    .brand-name { display: none; }
+    .resume-button { display: none; }
+
+    .experience-item { grid-template-columns: 1fr; }
+    .site-footer { justify-content: center; text-align: center; }
+}
+
+
+/* =========================================================
+   HERO DRONE — RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+    .hero-visual {
+        order: -1;
+        min-height: 300px;
+    }
+
+    .hero-drone {
+        width: min(82vw, 560px);
+    }
+}
+
+@media (max-width: 720px) {
+    .hero {
+        overflow: hidden;
+    }
+
+    .hero-visual {
+        min-height: 250px;
+    }
+
+    .hero-drone {
+        width: min(92vw, 480px);
+    }
+}

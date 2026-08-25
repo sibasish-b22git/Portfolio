@@ -1,0 +1,207 @@
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    position: relative;
+    min-height: 92vh;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding: calc(var(--section-pad-y) + 3.5rem) var(--gutter) var(--section-pad-y);
+    max-width: calc(var(--maxw) + 2 * var(--gutter));
+    margin-inline: auto;
+    overflow: visible;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    background:
+        radial-gradient(55% 55% at 82% 22%, var(--accent-tint), transparent 70%),
+        radial-gradient(48% 45% at 0% 78%, var(--accent-tint), transparent 72%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: var(--step-4);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+}
+
+.hero-title .title-line { display: block; }
+.hero-title .title-accent { color: var(--accent); }
+
+.hero-lede {
+    margin-top: 1.4rem;
+    max-width: 46ch;
+    color: var(--text-muted);
+    font-size: var(--step-1);
+    line-height: 1.5;
+}
+
+.hero-lede strong { color: var(--text); font-weight: 600; }
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin-top: 2.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+}
+
+.hero-meta span { color: var(--text); }
+
+/* ---------- DRONE ---------- */
+
+.hero-visual {
+    position: relative;
+    min-width: 0;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+}
+
+.hero-drone {
+    --drone-lift: 0px;
+    position: relative;
+    width: min(46vw, 590px);
+    aspect-ratio: 1887 / 1398;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translate3d(0, var(--drone-lift), 0);
+    animation: droneHover 4.8s ease-in-out infinite;
+    will-change: transform;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.drone-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+    filter: drop-shadow(0 28px 32px rgba(0, 0, 0, 0.28));
+    transition: filter 350ms ease;
+}
+
+.drone-aura {
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 122, 26, 0.22), transparent 68%);
+    filter: blur(28px);
+    opacity: 0;
+    transform: scale(0.82);
+    transition: opacity 350ms ease, transform 450ms var(--ease-out);
+    pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .hero-drone.is-lit .drone-image {
+        filter:
+            drop-shadow(0 30px 36px rgba(0, 0, 0, 0.3))
+            drop-shadow(0 0 28px rgba(255, 122, 26, 0.42));
+    }
+
+    .hero-drone.is-lit .drone-aura {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.hero-drone:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 8px;
+    border-radius: 24px;
+}
+
+.hero-drone.is-flying {
+    animation: none;
+    pointer-events: none;
+}
+
+.hero-drone.is-flying .drone-image {
+    filter:
+        drop-shadow(0 30px 36px rgba(0, 0, 0, 0.32))
+        drop-shadow(0 0 30px rgba(255, 122, 26, 0.35));
+}
+
+@keyframes droneHover {
+    0%, 100% {
+        transform: translate3d(0, -7px, 0) rotateZ(-0.15deg);
+    }
+    50% {
+        transform: translate3d(0, 9px, 0) rotateZ(0.15deg);
+    }
+}
+
+/* The click path: left across the name, off-screen, then re-enters from right. */
+.hero-drone.is-flying {
+    animation: droneFlyAcross 3.0s ease-in-out forwards;
+}
+
+@keyframes droneFlyAcross {
+    0% {
+        transform: translate3d(0, var(--flight-start-y, 0px), 0) rotateZ(0deg) scale(1);
+    }
+    38% {
+        transform: translate3d(-180vw, var(--flight-left-y, -8px), 0) rotateZ(-2deg) scale(0.94);
+    }
+    39% {
+        /* Wrap happens completely off-screen. No visible reset/glitch. */
+        transform: translate3d(180vw, var(--flight-right-y, 8px), 0) rotateZ(2deg) scale(0.94);
+    }
+    100% {
+        transform: translate3d(0, var(--flight-end-y, 0px), 0) rotateZ(0deg) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-drone { animation: none; }
+    .hero-drone.is-flying { animation: none; }
+}
+
+/* ---------- LIGHT MODE ---------- */
+
+body.light-mode .drone-image {
+    filter: drop-shadow(0 28px 32px rgba(20, 22, 26, 0.18));
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body.light-mode .hero-drone.is-lit .drone-image {
+        filter:
+            drop-shadow(0 30px 36px rgba(20, 22, 26, 0.20))
+            drop-shadow(0 0 28px rgba(226, 97, 10, 0.34));
+    }
+}

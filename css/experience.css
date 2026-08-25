@@ -1,0 +1,210 @@
+/* =========================================================
+   EXPERIENCE — internships & employment only
+========================================================= */
+
+.experience-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.experience-item {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr) 250px;
+    gap: clamp(1rem, 3vw, 2.4rem);
+    align-items: start;
+    padding: clamp(1.2rem, 2.5vw, 1.8rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    transition: border-color 0.45s var(--ease), transform 0.45s var(--ease);
+}
+
+.experience-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.experience-when {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.experience-where {
+    margin-top: 0.35rem;
+    font-size: 0.82rem;
+    color: var(--text-faint);
+}
+
+.experience-role {
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+.experience-org {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.7rem;
+}
+
+.experience-item p { color: var(--text-muted); font-size: 0.93rem; }
+
+.experience-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    list-style: none;
+}
+
+.experience-stack li {
+    padding: 0.22rem 0.6rem;
+    border-radius: 999px;
+    background: var(--accent-tint);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+}
+
+/* PHOTO AREA — field photo / lab photo for each role */
+.experience-item .media-slot {
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+}
+
+
+/* ---------- LEADERSHIP ---------- */
+
+.leadership {
+    margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.2rem;
+}
+
+.leadership-card {
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+
+.leadership-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+.leadership-card h4 { font-size: 0.98rem; font-weight: 600; }
+.leadership-card span { font-size: 0.82rem; color: var(--text-muted); }
+
+
+/* ---------- AWARDS ---------- */
+
+.awards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    list-style: none;
+}
+
+.awards li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: baseline;
+    padding: 0.75rem 0.9rem;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-tint);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 0.9rem;
+}
+
+/* ---------- CLICKABLE LEADERSHIP CARDS ---------- */
+
+.leadership-card {
+    min-height: 142px;
+    perspective: 900px;
+    cursor: pointer;
+    position: relative;
+}
+
+.leadership-card-inner {
+    position: relative;
+    width: 100%;
+    min-height: 142px;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.65s var(--ease);
+}
+
+.leadership-card.is-flipped .leadership-card-inner {
+    transform: rotateY(180deg);
+}
+
+.leadership-face {
+    position: absolute;
+    inset: 0;
+    min-height: 142px;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.leadership-face h4 { margin-top: 0.35rem; }
+.leadership-kicker {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.leadership-face span:last-child {
+    margin-top: 0.28rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.leadership-back {
+    transform: rotateY(180deg);
+    background:
+        radial-gradient(120% 100% at 0% 0%, var(--accent-tint), transparent 70%),
+        var(--bg-elev);
+    border-color: var(--accent);
+}
+
+.leadership-project-link::after,
+.leadership-link::after,
+.leadership-flip::after {
+    content: "↗";
+    position: absolute;
+    right: 0.9rem;
+    top: 0.75rem;
+    font-family: var(--mono);
+    color: var(--accent);
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.leadership-card:hover::after {
+    opacity: 1;
+    transform: none;
+}
+
+.experience-skills {
+    margin-top: clamp(2.4rem, 4vw, 3.6rem);
+}
