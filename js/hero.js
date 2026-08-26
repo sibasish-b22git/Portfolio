@@ -18,6 +18,7 @@ export function initHero() {
     let flying = false;
     let alphaCanvas = null;
     let alphaContext = null;
+    let alphaPixels = null;
 
     /* ---------------------------------------------------------
        Pixel-accurate hover detection.
@@ -31,49 +32,52 @@ export function initHero() {
 
         if (!image.complete || !image.naturalWidth) return;
 
+        /* Use a compact alpha map so image hit-testing never disrupts motion. */
         alphaCanvas = document.createElement("canvas");
-        alphaCanvas.width = image.naturalWidth;
-        alphaCanvas.height = image.naturalHeight;
+        alphaCanvas.width = Math.ceil(image.naturalWidth * 0.25);
+        alphaCanvas.height = Math.ceil(image.naturalHeight * 0.25);
 
         alphaContext = alphaCanvas.getContext("2d", { willReadFrequently: true });
 
         try {
-            alphaContext.drawImage(image, 0, 0);
+            alphaContext.drawImage(image, 0, 0, alphaCanvas.width, alphaCanvas.height);
+            alphaPixels = alphaContext.getImageData(0, 0, alphaCanvas.width, alphaCanvas.height).data;
         } catch (error) {
             alphaCanvas = null;
             alphaContext = null;
+            alphaPixels = null;
         }
     };
 
-    if (image.complete) prepareAlphaMap();
-    else image.addEventListener("load", prepareAlphaMap, { once: true });
+    const prepareWhenIdle = () => {
+        const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 250));
+        schedule(prepareAlphaMap, { timeout: 1000 });
+    };
+
+    if (image.complete) prepareWhenIdle();
+    else image.addEventListener("load", prepareWhenIdle, { once: true });
 
     const cursorHitsDrone = (event) => {
 
-        if (!alphaContext || flying) return false;
+        if (!alphaPixels || flying) return false;
 
         const rect = image.getBoundingClientRect();
 
         const x = Math.floor(
-            ((event.clientX - rect.left) / rect.width) * image.naturalWidth
+            ((event.clientX - rect.left) / rect.width) * alphaCanvas.width
         );
 
         const y = Math.floor(
-            ((event.clientY - rect.top) / rect.height) * image.naturalHeight
+            ((event.clientY - rect.top) / rect.height) * alphaCanvas.height
         );
 
         if (
             x < 0 || y < 0 ||
-            x >= image.naturalWidth ||
-            y >= image.naturalHeight
+            x >= alphaCanvas.width ||
+            y >= alphaCanvas.height
         ) return false;
 
-        try {
-            const alpha = alphaContext.getImageData(x, y, 1, 1).data[3];
-            return alpha > 24;
-        } catch {
-            return false;
-        }
+        return alphaPixels[(y * alphaCanvas.width + x) * 4 + 3] > 24;
     };
 
     drone.addEventListener("pointermove", (event) => {

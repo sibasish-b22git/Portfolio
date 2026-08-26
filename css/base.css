@@ -85,6 +85,13 @@ body {
     --glass-sheen:     rgba(255, 255, 255, 0.10);
 }
 
+/* High-contrast portfolio scrollbar */
+html { scrollbar-color: var(--orange) #101214; }
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: #101214; }
+::-webkit-scrollbar-thumb { background: var(--orange); border: 3px solid #101214; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--orange-soft); }
+
 
 /* =========================================================
    LIGHT THEME
@@ -619,7 +626,9 @@ html.theme-anim *:not(body):not(.navbar):not(.section-band):not(.theme-knob):not
     display: block;
     font-family: 'Brittany', cursive;
     font-size: 2.7rem;
-    line-height: .8;
+    line-height: 1.2;
+    padding-block: .12em;
+    margin-block: -.12em;
     color: var(--text);
     clip-path: inset(0 100% 0 0);
     animation: signature-write 1.9s 0.2s var(--ease-out) forwards;
