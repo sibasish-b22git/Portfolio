@@ -20,6 +20,43 @@ export function initHero() {
     let alphaContext = null;
     let alphaPixels = null;
 
+    const title = document.querySelector(".hero-title");
+    const lede = document.querySelector(".hero-lede");
+
+    /* Turn the name into small, independently animated pieces once.
+       The original visible text remains exactly the same. */
+    const prepareTitleFragments = () => {
+        if (!title || title.dataset.fragmented) return [];
+        const fragments = [];
+        title.querySelectorAll(".title-line").forEach((line) => {
+            const text = line.textContent;
+            line.textContent = "";
+            [...text].forEach((character, index) => {
+                const piece = document.createElement("span");
+                piece.className = "hero-fragment";
+                piece.textContent = character === " " ? "\u00a0" : character;
+                piece.style.setProperty("--fragment-index", index);
+                piece.style.setProperty("--scatter-x", `${(index - 4) * -1.15}rem`);
+                piece.style.setProperty("--scatter-y", `${((index * 17) % 5 - 2) * 1.15}rem`);
+                piece.style.setProperty("--scatter-r", `${(index - 3) * 5}deg`);
+                line.append(piece);
+                fragments.push(piece);
+            });
+        });
+        title.dataset.fragmented = "true";
+        return fragments;
+    };
+
+    const fragments = prepareTitleFragments();
+    const smashTitle = async () => {
+        if (!fragments.length) return;
+        title?.classList.add("is-shattered");
+        lede?.classList.add("is-shattered");
+        await new Promise((resolve) => window.setTimeout(resolve, 880));
+        title?.classList.remove("is-shattered");
+        lede?.classList.remove("is-shattered");
+    };
+
     /* ---------------------------------------------------------
        Pixel-accurate hover detection.
        CSS :hover sees the entire rectangular button. The PNG
@@ -136,6 +173,9 @@ export function initHero() {
             easing,
             fill: "forwards"
         });
+
+        /* The drone crosses the title shortly after it begins its leftward pass. */
+        window.setTimeout(() => { smashTitle(); }, 260);
 
         try {
             await out.finished;

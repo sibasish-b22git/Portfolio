@@ -4,7 +4,7 @@
 
 .hero {
     position: relative;
-    min-height: 92vh;
+    min-height: 100dvh;
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     align-items: center;
@@ -12,7 +12,7 @@
     padding: calc(var(--section-pad-y) + 3.5rem) var(--gutter) var(--section-pad-y);
     max-width: calc(var(--maxw) + 2 * var(--gutter));
     margin-inline: auto;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .hero::before {
@@ -30,6 +30,14 @@
     z-index: -1;
 }
 
+.kinetic-grid {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.78;
+}
+
 .hero-content {
     position: relative;
     z-index: 2;
@@ -45,6 +53,36 @@
 
 .hero-title .title-line { display: block; }
 .hero-title .title-accent { color: var(--accent); }
+
+.hero-fragment {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+    transition:
+        transform 780ms cubic-bezier(.16, 1, .3, 1),
+        opacity 560ms ease,
+        filter 560ms ease;
+    transition-delay: calc(var(--fragment-index) * 9ms);
+}
+
+.hero-title.is-shattered .hero-fragment {
+    opacity: 0;
+    filter: blur(2px);
+    transform:
+        translate3d(var(--scatter-x), var(--scatter-y), 0)
+        rotate(var(--scatter-r))
+        scale(.68);
+    transition-duration: 280ms;
+    transition-delay: calc(var(--fragment-index) * 5ms);
+}
+
+.hero-lede.is-shattered {
+    opacity: .16;
+    transform: translateX(-1rem);
+    filter: blur(2px);
+    transition: opacity 260ms ease, transform 260ms ease, filter 260ms ease;
+}
+
+.hero-lede { transition: opacity 650ms ease, transform 650ms var(--ease-out), filter 650ms ease; }
 
 .hero-lede {
     margin-top: 1.4rem;
@@ -193,6 +231,8 @@
 @media (prefers-reduced-motion: reduce) {
     .hero-drone { animation: none; }
     .hero-drone.is-flying { animation: none; }
+    .kinetic-grid { display: none; }
+    .hero-fragment { transition: none; }
 }
 
 /* ---------- LIGHT MODE ---------- */

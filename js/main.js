@@ -3,10 +3,11 @@
 ========================================================= */
 
 import { initTheme } from "./theme.js";
-import { initReveal, initSmoothAnchors } from "./transitions.js";
+import { initReveal, initScrollDepth, initSmoothAnchors } from "./transitions.js";
 import { initHero } from "./hero.js";
 import { initProjects } from "./projects.js";
 import { initExperience } from "./experience.js";
+import { initKineticGrid } from "./kinetic-grid.js";
 
 
 const sections = ["hero", "projects", "experience", "about", "contact"];
@@ -125,7 +126,9 @@ async function init() {
 
     await loadSections();
 
+    initKineticGrid();
     initReveal();
+    initScrollDepth();
     initSmoothAnchors();
     initActiveLink();
 
