@@ -11,7 +11,7 @@
 
 /* PORTRAIT — real photo of you goes here */
 .about-portrait .media-slot {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     border-radius: var(--radius-lg);
 }
 
